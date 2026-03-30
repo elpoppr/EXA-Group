@@ -2,1357 +2,643 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXA Group - المنصة الرسمية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>إكسا جروب | EXA Group - المنصة الرسمية</title>
     
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
             --primary-dark: #0f2027;
             --primary-medium: #203a43;
             --primary-light: #2c5364;
             --accent-gold: #ffd700;
-            --accent-orange: #ff8c42;
             --accent-green: #27ae60;
             --accent-red: #e74c3c;
-            --accent-blue: #3498db;
             --text-dark: #1e2a3e;
             --text-light: #4a627a;
-            --bg-light: #f8fafc;
-            --card-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-light: #f4f7f6;
+            --card-bg: #ffffff;
+            --card-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        body.dark-mode {
+            --bg-light: #0b1418;
+            --text-dark: #e0e0e0;
+            --text-light: #b0b0b0;
+            --card-bg: #16242a;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Cairo', sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
+            transition: background 0.3s ease;
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
             color: white;
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            cursor: pointer;
-        }
-        .logo span { color: var(--accent-gold); }
-        .logo small { font-size: 0.7rem; display: block; color: #ccc; }
+        .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .logo-area i { font-size: 2.2rem; color: var(--accent-gold); }
+        .logo-text h1 { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+        .logo-text h1 span { color: var(--accent-gold); }
 
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+        .nav-links { display: flex; gap: 5px; }
         .nav-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
             transition: var(--transition);
-            cursor: pointer;
             font-size: 0.9rem;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(255,255,255,0.1);
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-        }
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
+            font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
         }
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
+        .nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.15); color: var(--accent-gold); }
 
-        .main-content {
-            margin-top: 90px;
-            padding: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .user-controls { display: flex; align-items: center; gap: 12px; }
+        .dark-toggle { cursor: pointer; font-size: 1.3rem; color: var(--accent-gold); padding: 5px; }
 
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        .page.active {
-            display: block;
-        }
+        .main-content { margin-top: 100px; padding: 2rem; max-width: 1350px; margin-left: auto; margin-right: auto; min-height: 85vh; }
+        .page { display: none; animation: slideUp 0.5s ease; }
+        .page.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
+        /* الإحصائيات */
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .stat-item { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; text-align: center; box-shadow: var(--card-shadow); border-bottom: 4px solid var(--accent-gold); }
+        .stat-item b { font-size: 2.5rem; display: block; color: var(--primary-medium); }
+
+        /* الكروت */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .exa-card { background: var(--card-bg); border-radius: 25px; overflow: hidden; box-shadow: var(--card-shadow); transition: var(--transition); display: flex; flex-direction: column; }
+        .exa-card:hover { transform: translateY(-10px); }
+        .card-banner { background: linear-gradient(45deg, var(--primary-dark), var(--primary-light)); height: 80px; }
+        .user-img { width: 70px; height: 70px; background: #ddd; border-radius: 50%; border: 4px solid var(--card-bg); margin: -35px auto 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; position: relative; z-index: 2; }
+        .card-content { padding: 1.5rem; text-align: center; flex-grow: 1; }
+        .skill-tag { background: rgba(44, 83, 100, 0.1); color: var(--primary-light); padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; margin: 2px; display: inline-block; font-weight: 700; }
+
+        .search-box { width: 100%; max-width: 500px; margin: 0 auto 2rem; position: relative; }
+        .search-box input { width: 100%; padding: 12px 40px; border-radius: 25px; border: 1px solid #ddd; background: var(--card-bg); color: var(--text-dark); outline: none; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-light); }
+
+        /* كود الدردشة المطلوب */
+        .chat-container {
+            height:600px;
+            display:flex;
+            flex-direction:column;
+            background:var(--card-bg);
+            border-radius:20px;
+            overflow:hidden;
             box-shadow: var(--card-shadow);
-            transition: var(--transition);
         }
-        body.dark-mode .stat-card,
-        body.dark-mode .member-card,
-        body.dark-mode .project-card,
-        body.dark-mode .chat-container,
-        body.dark-mode .login-box,
-        body.dark-mode .ip-card {
-            background: #2d2d44;
-            color: #eee;
+        .messages-area {
+            flex:1;
+            overflow-y:auto;
+            padding:15px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            background: rgba(0,0,0,0.02);
         }
-        .stat-card:hover { transform: translateY(-5px); }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-light);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin: 2rem 0;
+        .msg-bubble {
+            max-width:70%;
+            padding:10px 15px;
+            border-radius:15px;
+            font-size:14px;
             position: relative;
         }
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--accent-gold);
-            border-radius: 2px;
-        }
-
-        .members-grid, .projects-grid, .ip-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .member-card, .project-card, .ip-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .member-card:hover, .project-card:hover, .ip-card:hover { transform: translateY(-5px); }
-
-        .member-avatar, .project-image, .ip-header {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-            padding: 1.5rem;
-            text-align: center;
-            color: white;
-        }
-        .member-avatar i, .project-image i, .ip-header i { font-size: 3rem; }
-        .member-name, .project-title, .ip-title { font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; }
-
-        .member-info, .project-info, .ip-info { padding: 1.5rem; }
-        .member-skill {
-            background: #eef2f7;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin: 0.2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Cairo', sans-serif;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-        .btn:hover { transform: translateY(-2px); }
-
-        .chat-container {
-            background: white;
-            border-radius: 20px;
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-        .chat-message {
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-        .chat-message.sent {
-            flex-direction: row-reverse;
-        }
-        .chat-message.sent .message-content {
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-            color: white;
-        }
-        .message-content {
-            max-width: 70%;
-            background: #f0f0f0;
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-        }
-        .message-sender {
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-        }
-        .message-text { margin: 0.3rem 0; }
-        .message-time { font-size: 0.7rem; opacity: 0.7; }
-        .chat-input-area {
-            display: flex;
-            padding: 1rem;
-            gap: 0.5rem;
-            border-top: 1px solid #ddd;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .login-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .login-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 380px;
-            text-align: center;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 450px;
-            height: 100vh;
-            background: white;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
-            z-index: 1500;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-        .admin-panel.active {
+        .msg-bubble small {
             display: block;
+            font-weight: bold;
+            font-size: 0.7rem;
+            margin-bottom: 3px;
         }
-
-        .form-group {
-            margin-bottom: 1rem;
+        .sent {
+            align-self:flex-end;
+            background: var(--primary-light);
+            color:#fff;
+            border-bottom-left-radius: 2px;
         }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .pending-card {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            margin-bottom: 0.8rem;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
-
-        footer {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container { flex-direction: column; }
-            .main-content { padding: 1rem; margin-top: 140px; }
-            .admin-panel { width: 100%; }
-        }
-
-        .founder-badge {
-            background: var(--accent-gold);
+        .received {
+            align-self:flex-start;
+            background:#eee;
             color: #333;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-            margin-top: 0.3rem;
+            border-bottom-right-radius: 2px;
         }
-        
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
+        .msg-time {
+            font-size:10px;
+            opacity:0.6;
+            margin-top:5px;
+            text-align: left;
         }
-        
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--accent-green);
+        .sent .msg-time { text-align: right; color: #fff; }
+
+        .chat-input-bar {
+            display:flex;
+            padding:15px;
+            gap:10px;
+            border-top:1px solid rgba(0,0,0,0.05);
+            background: var(--card-bg);
+        }
+        .chat-input-bar input {
+            flex:1;
+            padding:12px;
+            border-radius:25px;
+            border:1px solid #ddd;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            outline: none;
+        }
+        .chat-input-bar button {
+            width:45px;
+            height: 45px;
+            border-radius:50%;
+            border: none;
+            background: var(--primary-light);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
-            display: none;
+            cursor: pointer;
+            font-size: 1.2rem;
         }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .typing-indicator {
+            font-size:12px;
+            padding:5px 15px;
+            color: var(--accent-green);
+            font-weight: bold;
+            height: 25px;
         }
-        
-        .status-pending {
-            background: #f39c12;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        
-        .status-approved {
-            background: #27ae60;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        
-        .under-construction {
-            text-align: center;
-            padding: 4rem;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            border-radius: 20px;
-            color: white;
-        }
-        
-        .ip-owners {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .owner-tag {
-            background: var(--accent-gold);
-            color: #333;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-        }
-        
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+
+        /* الإدارة */
+        .admin-section { max-width: 800px; margin: 0 auto; }
+        .request-card { background: var(--card-bg); padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid var(--accent-gold); box-shadow: var(--card-shadow); }
+
+        .map-frame { width: 100%; height: 400px; border-radius: 25px; border: 5px solid var(--card-bg); box-shadow: var(--card-shadow); overflow: hidden; }
+
+        .btn { padding: 8px 20px; border-radius: 25px; border: none; cursor: pointer; font-weight: 700; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; font-family: 'Cairo'; font-size: 0.85rem; }
+        .btn-gold { background: var(--accent-gold); color: var(--primary-dark); }
+        .btn-primary { background: var(--primary-light); color: white; }
+        .btn-danger { background: var(--accent-red); color: white; }
+        .btn-sm { padding: 5px 12px; font-size: 0.75rem; }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-box { background: var(--card-bg); padding: 2rem; border-radius: 25px; width: 90%; max-width: 400px; }
+        .modal-box input, .modal-box textarea { width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 10px; border: 1px solid #ddd; background: var(--bg-light); color: var(--text-dark); font-family: 'Cairo'; }
+
+        footer { background: var(--primary-dark); color: white; padding: 3rem 2rem; text-align: center; margin-top: 4rem; }
+        .notification { position: fixed; bottom: 20px; left: 20px; padding: 12px 25px; border-radius: 30px; color: white; z-index: 9999; display: none; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="nav-container">
-        <div class="logo">
-            EXA <span>Group</span>
-            <small>بالمهارة نصنع الفارق</small>
+        <div class="logo-area" onclick="showPage('home')">
+            <i class="fas fa-atom"></i>
+            <div class="logo-text"><h1>EXA <span>Group</span></h1></div>
         </div>
-        <div class="nav-links" id="navLinks">
-            <a onclick="window.showPage('home')" class="active">🏠 الرئيسية</a>
-            <a onclick="window.showPage('projects')">📁 المشاريع</a>
-            <a onclick="window.showPage('elearning')">📚 التعليم</a>
-            <a onclick="window.showPage('ip')">⚖️ الملكية الفكرية</a>
-            <a onclick="window.showPage('chat')">💬 الشات الجماعي</a>
-            <a onclick="window.showPage('badges')">🎖️ الجوائز</a>
-            <a id="adminLink" onclick="window.openAdminPanel()" style="display: none;">⚙️ الإدارة</a>
-        </div>
-        <div id="userInfo" class="user-info">
-            <i class="fas fa-user-circle"></i>
-            <span id="userNameText">زائر</span>
-            <span id="userStatus"></span>
-            <button class="logout-btn" onclick="window.logout()" id="logoutBtn" style="display: none;">تسجيل خروج</button>
-            <button class="logout-btn" onclick="window.showLoginModal()" id="loginBtn">تسجيل دخول</button>
+        <nav class="nav-links">
+            <a onclick="showPage('home')" id="nav-home" class="active">🏠 الرئيسية</a>
+            <a onclick="showPage('members')" id="nav-members">👥 الوحوش</a>
+            <a onclick="showPage('projects')" id="nav-projects">📁 المشاريع</a>
+            <a onclick="showPage('chat')" id="nav-chat">💬 القعدة</a>
+            <a onclick="showPage('map')" id="nav-map">📍 المقر</a>
+            <a id="adminLink" onclick="showPage('admin')" style="display: none; color: var(--accent-gold);">⚙️ القيادة</a>
+        </nav>
+        <div class="user-controls">
+            <div class="dark-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></div>
+            <button class="btn btn-gold" id="loginBtn" onclick="openModal('loginModal')">دخول</button>
+            <button class="btn btn-danger" id="logoutBtn" onclick="handleLogout()" style="display: none;">خروج</button>
         </div>
     </div>
 </header>
 
 <div class="main-content">
-    <!-- Home Page -->
+    
+    <!-- الرئيسية -->
     <div id="home-page" class="page active">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="totalMembers">0</div>
-                <div class="stat-label">الأعضاء المعتمدين</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalProjects">0</div>
-                <div class="stat-label">المشاريع</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalIP">0</div>
-                <div class="stat-label">ملكيات فكرية</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="pendingMembers">0</div>
-                <div class="stat-label">بانتظار الموافقة</div>
-            </div>
+        <div class="stats-bar">
+            <div class="stat-item"><b>0</b><p id="stat-m">عضو</p></div>
+            <div class="stat-item"><b>0</b><p id="stat-p">مشروع</p></div>
+            <div class="stat-item"><b>0</b><p id="stat-c">رسالة</p></div>
         </div>
-
-        <h2 class="section-title">👥 أعضاء EXA Group المعتمدين</h2>
-        <div class="members-grid" id="membersGrid">
-            <div class="loading">جاري التحميل...</div>
+        <div class="map-frame">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d217.27324478096082!2d31.005783341238526!3d29.388674340832157!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14599b099e59b309%3A0xcb94aa163351156b!2sEXA%20Group!5e0!3m2!1sen!2seg!4v1774813229575!5m2!1sen!2seg" width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 
-    <!-- Projects Page -->
+    <!-- الوحوش -->
+    <div id="members-page" class="page">
+        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="mSearch" placeholder="ابحث بالاسم أو المهارة..." onkeyup="filterMembers()"></div>
+        <div class="grid-container" id="membersGrid"></div>
+    </div>
+
+    <!-- المشاريع -->
     <div id="projects-page" class="page">
-        <h2 class="section-title">📁 المشاريع المصممة</h2>
-        <div class="projects-grid" id="projectsGrid">
-            <div class="loading">جاري التحميل...</div>
+        <div style="text-align: center; margin-bottom: 2rem;"><button class="btn btn-primary" id="addProjectBtn" style="display: none;" onclick="openModal('projectModal')">➕ مشروع جديد</button></div>
+        <div class="grid-container" id="projectsGrid"></div>
+    </div>
+
+    <!-- المقر -->
+    <div id="map-page" class="page">
+        <div class="map-frame">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d217.27324478096082!2d31.005783341238526!3d29.388674340832157!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14599b099e59b309%3A0xcb94aa163351156b!2sEXA%20Group!5e0!3m2!1sen!2seg!4v1774813229575!5m2!1sen!2seg" width="100%" height="100%" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 
-    <!-- E-Learning Page -->
-    <div id="elearning-page" class="page">
-        <div class="under-construction">
-            <i class="fas fa-chalkboard-teacher" style="font-size: 4rem;"></i>
-            <h2 style="margin: 1rem 0;">📚 منصة EXA التعليمية</h2>
-            <p style="font-size: 1.2rem;">قيد التطوير حاليًا</p>
-            <p>سيتم إطلاق المنصة قريبًا بمحتوى تعليمي متميز في مجالات البرمجة والذكاء الاصطناعي وتطوير البرمجيات</p>
-            <div class="btn" style="margin-top: 1rem; background: white; color: #e67e22;" onclick="window.showNotification('سيتم إعلامك عند الإطلاق قريبًا!')">🔔 اشترك ليصلك الإشعار</div>
-        </div>
-    </div>
-
-    <!-- IP Management Page -->
-    <div id="ip-page" class="page">
-        <h2 class="section-title">⚖️ نظام الملكية الفكرية</h2>
-        <button class="btn" onclick="window.showAddIPForm()" style="margin-bottom: 2rem;">➕ تسجيل ملكية فكرية جديدة</button>
-        <div class="ip-grid" id="ipGrid">
-            <div class="loading">جاري التحميل...</div>
-        </div>
-    </div>
-
-    <!-- Chat Page -->
+    <!-- الدردشة المحدثة -->
     <div id="chat-page" class="page">
-        <h2 class="section-title">💬 غرفة الشات الجماعية</h2>
         <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <div class="loading">سجل الدخول للمشاركة في الشات</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." disabled>
-                <button class="btn" onclick="window.sendMessage()" disabled>إرسال</button>
+            <div class="messages-area" id="chatBox"></div>
+            <div id="typing" class="typing-indicator"></div>
+            <div class="chat-input-bar">
+                <input type="text" id="msgInput" placeholder="اكتب رسالتك يا وحش..." disabled />
+                <button onclick="handleSendMessage()" id="sendBtn" disabled>➤</button>
             </div>
         </div>
     </div>
 
-    <!-- Badges Page -->
-    <div id="badges-page" class="page">
-        <h2 class="section-title">🎖️ الجوائز والتكريمات</h2>
-        <div class="stats-grid" id="badgesGrid"></div>
-    </div>
+    <!-- الإدارة -->
+    <div id="admin-page" class="page"><div class="admin-section" id="pendingUsersList"></div></div>
 </div>
 
-<!-- Login Modal -->
-<div id="loginModal" class="login-overlay">
-    <div class="login-box">
-        <h3>🔐 تسجيل الدخول</h3>
-        <i class="fas fa-user-shield" style="font-size: 3rem; color: var(--accent-gold); margin: 1rem 0;"></i>
-        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
-        <input type="password" id="loginPassword" placeholder="كلمة المرور">
-        <button class="btn" id="loginBtnSubmit" onclick="window.login()">دخول</button>
-        <button class="btn" style="background: #555;" onclick="window.closeLoginModal()">إلغاء</button>
-        <hr style="margin: 1rem 0;">
-        <p style="font-size: 0.8rem;">ليس لديك حساب؟ <a href="#" onclick="window.showRegister()">سجل الآن</a></p>
-        <p style="font-size: 0.7rem; margin-top: 0.5rem; color: var(--accent-gold);">📌 حساب المدير: elpoppr@exagroup.com / 123123123</p>
-    </div>
-</div>
+<!-- مودالات -->
+<div id="loginModal" class="modal-overlay"><div class="modal-box">
+    <h3>🔐 دخول</h3>
+    <input type="email" id="logEmail" placeholder="الايميل">
+    <input type="password" id="logPass" placeholder="الباسورد">
+    <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">دخول</button>
+    <p style="text-align:center; margin-top:10px">جديد؟ <a href="#" onclick="openRegister()">سجل هنا</a></p>
+    <button class="btn btn-danger" style="width:100%; margin-top:5px" onclick="closeModal('loginModal')">إلغاء</button>
+</div></div>
 
-<!-- Register Modal -->
-<div id="registerModal" class="login-overlay">
-    <div class="login-box">
-        <h3>📝 إنشاء حساب جديد</h3>
-        <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--accent-gold); margin: 1rem 0;"></i>
-        <input type="text" id="regName" placeholder="الاسم الكامل">
-        <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
-        <input type="password" id="regPassword" placeholder="كلمة المرور">
-        <input type="text" id="regSkills" placeholder="المهارات (مفصولة بفاصلة)">
-        <button class="btn" id="registerBtnSubmit" onclick="window.register()">تسجيل</button>
-        <button class="btn" style="background: #555;" onclick="window.closeRegisterModal()">إلغاء</button>
-        <hr style="margin: 1rem 0;">
-        <p style="font-size: 0.8rem; color: var(--accent-gold);">⚠️ بعد التسجيل، حسابك سيكون قيد المراجعة حتى موافقة الإدارة</p>
-        <p style="font-size: 0.8rem;">لديك حساب؟ <a href="#" onclick="window.showLogin()">تسجيل دخول</a></p>
-    </div>
-</div>
+<div id="registerModal" class="modal-overlay"><div class="modal-box">
+    <h3>📝 تسجيل</h3>
+    <input type="text" id="regName" placeholder="الاسم الكامل">
+    <input type="email" id="regEmail" placeholder="الايميل">
+    <input type="password" id="regPass" placeholder="الباسورد">
+    <input type="text" id="regSkills" placeholder="مهاراتك">
+    <button class="btn btn-primary" style="width:100%" onclick="handleRegister()">طلب انضمام</button>
+    <button class="btn btn-danger" style="width:100%; margin-top:5px" onclick="closeModal('registerModal')">إلغاء</button>
+</div></div>
 
-<!-- Add IP Modal -->
-<div id="addIPModal" class="login-overlay">
-    <div class="login-box" style="width: 450px;">
-        <h3>📝 تسجيل ملكية فكرية جديدة</h3>
-        <input type="text" id="ipName" placeholder="اسم المشروع/البرنامج">
-        <input type="text" id="ipType" placeholder="النوع (برنامج، تصميم، اختراع، etc)">
-        <input type="text" id="ipOwners" placeholder="المالكون (أسماء مفصولة بفاصلة)">
-        <textarea id="ipDescription" rows="3" placeholder="وصف الملكية الفكرية"></textarea>
-        <button class="btn" onclick="window.addIP()">تسجيل</button>
-        <button class="btn" style="background: #555;" onclick="window.closeAddIPModal()">إلغاء</button>
-    </div>
-</div>
-
-<!-- Admin Panel -->
-<div id="adminPanel" class="admin-panel">
-    <h3>⚙️ لوحة الإدارة</h3>
-    <button class="btn" onclick="window.closeAdminPanel()" style="float: left;">✖</button>
-    <div style="clear: both;"></div>
-    <hr>
-    
-    <h4>➕ إضافة مشروع جديد</h4>
-    <div class="form-group">
-        <input type="text" id="projectName" placeholder="اسم المشروع">
-    </div>
-    <div class="form-group">
-        <textarea id="projectDesc" placeholder="وصف المشروع"></textarea>
-    </div>
-    <div class="form-group">
-        <input type="text" id="projectParticipants" placeholder="المشاركون (أسماء مفصولة بفاصلة)">
-    </div>
-    <button class="btn" onclick="window.addProject()">إضافة مشروع</button>
-    
-    <hr style="margin: 1rem 0;">
-    <h4>📋 طلبات الانضمام <span id="pendingCount"></span></h4>
-    <div id="pendingRequests"></div>
-</div>
-
-<footer>
-    <p>© 2026 EXA Group - جميع الحقوق محفوظة</p>
-    <p style="font-size: 0.8rem;">المؤسس والباشمبرمج: <strong style="color: var(--accent-gold);">محمد ايهاب</strong> | نبني بالمهارة، نقيس بالإتقان</p>
-</footer>
+<div id="projectModal" class="modal-overlay"><div class="modal-box">
+    <h3>➕ نشر مشروع</h3>
+    <input type="text" id="pName" placeholder="اسم المشروع">
+    <textarea id="pDesc" rows="3" placeholder="وصف المشروع"></textarea>
+    <input type="url" id="pLink" placeholder="رابط المشروع">
+    <button class="btn btn-primary" style="width:100%" onclick="handleAddProject()">نشر</button>
+    <button class="btn btn-danger" style="width:100%; margin-top:5px" onclick="closeModal('projectModal')">إلغاء</button>
+</div></div>
 
 <div id="notification" class="notification"></div>
 
-<script type="module">
-    // Import Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc, getDocs, addDoc, deleteDoc, updateDoc, query, where, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+<footer>
+    <h2 style="color: var(--accent-gold);">EXA Group</h2>
+    <p>القائد والمؤسس: الباشمبرمج محمد إيهاب</p>
+</footer>
 
-    // Firebase Configuration
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, addDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
     const firebaseConfig = {
         apiKey: "AIzaSyD12Lp0Mv8C6OStGwpPmHpi6-vjwvF2Q2U",
         authDomain: "exa-group.firebaseapp.com",
         projectId: "exa-group",
         storageBucket: "exa-group.firebasestorage.app",
         messagingSenderId: "304049809292",
-        appId: "1:304049809292:web:846b683f3c1765389518a9",
-        measurementId: "G-XPF4GVT79P"
+        appId: "1:304049809292:web:846b683f3c1765389518a9"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const rtdb = getDatabase(app);
 
-    // ==================== GLOBAL VARIABLES ====================
-    let currentUser = null;
-    let currentUserData = null;
+    let userProfile = null;
+    const ADMIN_EMAIL = 'elpoppr2010@gmail.com';
 
-    // ==================== NOTIFICATION ====================
-    window.showNotification = function(message, isError = false) {
-        const notification = document.getElementById('notification');
-        notification.style.backgroundColor = isError ? '#e74c3c' : '#27ae60';
-        notification.innerHTML = message;
-        notification.style.display = 'block';
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 3000);
+    window.showPage = (id) => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        document.getElementById(id + '-page').classList.add('active');
+        if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).classList.add('active');
+        if(id === 'home') updateStats();
+        if(id === 'members') loadMembers();
+        if(id === 'projects') loadProjects();
+        if(id === 'admin') loadPendingUsers();
+    };
+
+    window.openModal = (id) => {
+        // تنظيف الـ modal عند فتحه
+        if(id === 'projectModal') {
+            const modal = document.getElementById(id);
+            delete modal.dataset.editId;
+            document.getElementById('pName').value = '';
+            document.getElementById('pDesc').value = '';
+            document.getElementById('pLink').value = '';
+        }
+        document.getElementById(id).style.display = 'flex';
+    };
+    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+    window.openRegister = () => { closeModal('loginModal'); openModal('registerModal'); };
+    window.toggleDarkMode = () => document.body.classList.toggle('dark-mode');
+
+    function toast(msg, type = 'success') {
+        const t = document.getElementById('notification');
+        t.innerText = msg;
+        t.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 3000);
     }
 
-    // ==================== UPDATE UI ====================
-    function updateUI() {
-        const userNameSpan = document.getElementById('userNameText');
-        const userStatusSpan = document.getElementById('userStatus');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const adminLink = document.getElementById('adminLink');
-        const messageInput = document.getElementById('messageInput');
-        const chatSendBtn = document.querySelector('#chat-page .btn');
-        
-        console.log('Updating UI - Current user:', currentUser?.email);
-        console.log('User data:', currentUserData);
-        
-        if (currentUser && currentUserData) {
-            // User is logged in
-            const displayName = currentUserData.name || currentUser.email.split('@')[0];
-            userNameSpan.innerHTML = `${displayName}`;
-            
-            if (currentUserData.status === 'approved') {
-                userStatusSpan.innerHTML = '<span class="status-approved">✓ معتمد</span>';
-                if (messageInput) messageInput.disabled = false;
-                if (chatSendBtn) chatSendBtn.disabled = false;
-                if (messageInput) messageInput.placeholder = 'اكتب رسالتك هنا...';
-            } else {
-                userStatusSpan.innerHTML = '<span class="status-pending">⏳ قيد المراجعة</span>';
-                if (messageInput) messageInput.disabled = true;
-                if (chatSendBtn) chatSendBtn.disabled = true;
-                if (messageInput) messageInput.placeholder = 'حسابك قيد المراجعة، انتظر موافقة الإدارة';
-            }
-            
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-            
-            // Show admin link for elpoppr
-            if (currentUser.email === 'elpoppr@exagroup.com') {
-                adminLink.style.display = 'inline-block';
-            } else {
-                adminLink.style.display = 'none';
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const snap = await getDoc(doc(db, "users", user.uid));
+            if (snap.exists()) {
+                userProfile = snap.data();
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'block';
+                if(userProfile.status === 'approved') {
+                    document.getElementById('msgInput').disabled = false;
+                    document.getElementById('sendBtn').disabled = false;
+                    document.getElementById('addProjectBtn').style.display = 'inline-flex';
+                }
+                if(user.email === ADMIN_EMAIL) document.getElementById('adminLink').style.display = 'block';
             }
         } else {
-            // User is logged out
-            userNameSpan.innerHTML = 'زائر';
-            userStatusSpan.innerHTML = '';
-            loginBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-            adminLink.style.display = 'none';
-            
-            if (messageInput) {
-                messageInput.disabled = true;
-                messageInput.placeholder = 'سجل الدخول للمشاركة في الشات';
-            }
-            if (chatSendBtn) chatSendBtn.disabled = true;
+            userProfile = null;
+            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('adminLink').style.display = 'none';
         }
-    }
+        updateStats(); loadMembers(); loadProjects(); loadChat();
+    });
 
-    // ==================== GET USER DATA FROM FIRESTORE ====================
-    async function getUserData(userId, email) {
-        try {
-            // First try to get by document ID
-            const userRef = doc(db, 'users', userId);
-            const userSnap = await getDoc(userRef);
-            
-            if (userSnap.exists()) {
-                return { id: userSnap.id, ...userSnap.data() };
-            }
-            
-            // If not found by ID, try by email
-            const userQuery = await getDocs(query(collection(db, 'users'), where('email', '==', email)));
-            if (!userQuery.empty) {
-                const userDoc = userQuery.docs[0];
-                return { id: userDoc.id, ...userDoc.data() };
-            }
-            
-            return null;
-        } catch (error) {
-            console.error('Error getting user data:', error);
-            return null;
-        }
-    }
-
-    // ==================== AUTH FUNCTIONS ====================
-    window.showLoginModal = function() { 
-        document.getElementById('loginModal').style.display = 'flex'; 
-    }
-    
-    window.closeLoginModal = function() { 
-        document.getElementById('loginModal').style.display = 'none'; 
-        document.getElementById('loginEmail').value = '';
-        document.getElementById('loginPassword').value = '';
-    }
-    
-    window.showRegister = function() { 
-        window.closeLoginModal(); 
-        document.getElementById('registerModal').style.display = 'flex'; 
-    }
-    
-    window.closeRegisterModal = function() { 
-        document.getElementById('registerModal').style.display = 'none'; 
-        document.getElementById('regName').value = '';
-        document.getElementById('regEmail').value = '';
-        document.getElementById('regPassword').value = '';
-        document.getElementById('regSkills').value = '';
-    }
-    
-    window.showLogin = function() { 
-        window.closeRegisterModal(); 
-        window.showLoginModal(); 
-    }
-
-    window.login = async function() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        
-        if (!email || !password) {
-            window.showNotification('يرجى إدخال البريد الإلكتروني وكلمة المرور', true);
-            return;
-        }
-        
-        const loginBtn = document.getElementById('loginBtnSubmit');
-        const originalText = loginBtn.innerHTML;
-        loginBtn.innerHTML = '<span class="spinner"></span> جاري الدخول...';
-        loginBtn.disabled = true;
-        
-        try {
-            const result = await signInWithEmailAndPassword(auth, email, password);
-            currentUser = result.user;
-            
-            // Get user data from Firestore
-            currentUserData = await getUserData(currentUser.uid, email);
-            
-            if (!currentUserData) {
-                // If user exists in Auth but not in Firestore, create it
-                console.log('User not found in Firestore, creating...');
-                currentUserData = {
-                    name: email.split('@')[0],
-                    email: email,
-                    skills: [],
-                    status: email === 'elpoppr@exagroup.com' ? 'approved' : 'pending',
-                    role: email === 'elpoppr@exagroup.com' ? 'admin' : 'member',
-                    isFounder: email === 'elpoppr@exagroup.com',
-                    createdAt: new Date().toISOString(),
-                    programsCount: 0,
-                    badges: []
-                };
-                await setDoc(doc(db, 'users', currentUser.uid), currentUserData);
-            }
-            
-            updateUI();
-            window.closeLoginModal();
-            window.showNotification(`مرحباً ${currentUserData.name || currentUser.email.split('@')[0]}!`);
-            
-        } catch (error) {
-            console.error('Login error:', error);
-            if (error.code === 'auth/configuration-not-found') {
-                window.showNotification('❌ خطأ: يرجى تفعيل خدمة Email/Password في Firebase Console > Authentication', true);
-            } else if (error.code === 'auth/user-not-found') {
-                window.showNotification('❌ البريد الإلكتروني غير مسجل', true);
-            } else if (error.code === 'auth/wrong-password') {
-                window.showNotification('❌ كلمة المرور غير صحيحة', true);
-            } else if (error.code === 'auth/invalid-credential') {
-                window.showNotification('❌ البريد الإلكتروني أو كلمة المرور غير صحيحة', true);
-            } else {
-                window.showNotification('خطأ: ' + error.message, true);
-            }
-        } finally {
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-        }
-    }
-
-    window.register = async function() {
+    window.handleRegister = async () => {
         const name = document.getElementById('regName').value;
         const email = document.getElementById('regEmail').value;
-        const password = document.getElementById('regPassword').value;
+        const pass = document.getElementById('regPass').value;
         const skills = document.getElementById('regSkills').value;
-        
-        if (!name || !email || !password) {
-            window.showNotification('يرجى ملء جميع الحقول', true);
-            return;
-        }
-        
-        const registerBtn = document.getElementById('registerBtnSubmit');
-        const originalText = registerBtn.innerHTML;
-        registerBtn.innerHTML = '<span class="spinner"></span> جاري التسجيل...';
-        registerBtn.disabled = true;
-        
+
+        const q = query(collection(db, "users"), where("email", "==", email));
+        const check = await getDocs(q);
+        if(!check.empty) return toast("هذا البريد مسجل مسبقاً!", "error");
+
         try {
-            const result = await createUserWithEmailAndPassword(auth, email, password);
-            currentUser = result.user;
-            
-            // Create user data
-            currentUserData = {
-                name: name,
-                email: email,
-                skills: skills ? skills.split(',').map(s => s.trim()) : [],
-                status: 'pending',
-                role: 'member',
-                createdAt: new Date().toISOString(),
-                programsCount: 0,
-                badges: []
-            };
-            
-            // Save to Firestore
-            await setDoc(doc(db, 'users', currentUser.uid), currentUserData);
-            
-            // Add to pending requests collection for admin
-            await addDoc(collection(db, 'pendingRequests'), {
-                name: name,
-                email: email,
-                skills: skills,
-                uid: currentUser.uid,
-                createdAt: new Date().toISOString()
+            const cred = await createUserWithEmailAndPassword(auth, email, pass);
+            await setDoc(doc(db, "users", cred.user.uid), {
+                uid: cred.user.uid, name, email,
+                skills: skills ? skills.split(',') : [],
+                status: 'pending', role: 'member'
             });
-            
-            updateUI();
-            window.closeRegisterModal();
-            window.showNotification('✅ تم إنشاء الحساب! حسابك قيد المراجعة من قبل الإدارة');
-            
-        } catch (error) {
-            console.error('Register error:', error);
-            if (error.code === 'auth/configuration-not-found') {
-                window.showNotification('❌ خطأ: يرجى تفعيل خدمة Email/Password في Firebase Console > Authentication', true);
-            } else if (error.code === 'auth/email-already-in-use') {
-                window.showNotification('❌ هذا البريد الإلكتروني مسجل بالفعل', true);
-            } else {
-                window.showNotification('خطأ: ' + error.message, true);
-            }
-        } finally {
-            registerBtn.innerHTML = originalText;
-            registerBtn.disabled = false;
-        }
+            toast("تم تقديم طلبك بنجاح");
+            closeModal('registerModal');
+        } catch (e) { toast("خطأ في التسجيل", "error"); }
+    };
+
+    window.handleLogin = async () => {
+        const email = document.getElementById('logEmail').value;
+        const pass = document.getElementById('logPass').value;
+        try { await signInWithEmailAndPassword(auth, email, pass); closeModal('loginModal'); } 
+        catch (e) { toast("خطأ في الدخول", "error"); }
+    };
+
+    window.handleLogout = () => signOut(auth);
+
+    async function updateStats() {
+        const u = await getDocs(query(collection(db, "users"), where("status", "==", "approved")));
+        const p = await getDocs(collection(db, "projects"));
+        document.querySelectorAll('.stat-item b')[0].innerText = u.size;
+        document.querySelectorAll('.stat-item b')[1].innerText = p.size;
     }
 
-    window.logout = async function() {
-        try {
-            await signOut(auth);
-            currentUser = null;
-            currentUserData = null;
-            updateUI();
-            window.showNotification('تم تسجيل الخروج');
-        } catch (error) {
-            window.showNotification('خطأ: ' + error.message, true);
-        }
-    }
-
-    // ==================== LOAD FUNCTIONS ====================
     async function loadMembers() {
-        try {
-            const querySnapshot = await getDocs(query(collection(db, 'users'), where('status', '==', 'approved')));
-            const members = [];
-            querySnapshot.forEach(doc => {
-                members.push({ id: doc.id, ...doc.data() });
-            });
-            
-            document.getElementById('totalMembers').innerText = members.length;
-            
-            const grid = document.getElementById('membersGrid');
-            if (members.length === 0) {
-                grid.innerHTML = '<div class="loading">لا يوجد أعضاء معتمدين بعد</div>';
-                return;
-            }
-            
-            grid.innerHTML = members.map(member => `
-                <div class="member-card">
-                    <div class="member-avatar">
-                        <i class="fas ${member.isFounder ? 'fa-crown' : 'fa-user-circle'}"></i>
-                        <div class="member-name">${member.name || member.email}</div>
-                        ${member.isFounder ? '<div class="founder-badge"><i class="fas fa-star"></i> المؤسس والباشمبرمج</div>' : ''}
-                    </div>
-                    <div class="member-info">
-                        <div><i class="fas fa-code"></i> ${member.programsCount || 0} مشروع</div>
-                        <div style="margin: 0.5rem 0;">
-                            ${member.skills?.map(s => `<span class="member-skill">${s}</span>`).join('') || ''}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error('Error loading members:', error);
-        }
-    }
-
-    async function loadProjects() {
-        try {
-            const querySnapshot = await getDocs(collection(db, 'projects'));
-            const projects = [];
-            querySnapshot.forEach(doc => {
-                projects.push({ id: doc.id, ...doc.data() });
-            });
-            
-            document.getElementById('totalProjects').innerText = projects.length;
-            
-            const grid = document.getElementById('projectsGrid');
-            if (projects.length === 0) {
-                grid.innerHTML = '<div class="loading">لا توجد مشاريع بعد</div>';
-                return;
-            }
-            
-            grid.innerHTML = projects.map(project => `
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-laptop-code"></i>
-                        <div class="project-title">${project.name}</div>
-                    </div>
-                    <div class="project-info">
-                        <p>${project.description || 'وصف المشروع'}</p>
-                        <div style="margin: 0.5rem 0;">
-                            <strong>المشاركون:</strong>
-                            ${project.participants?.map(p => `<span class="member-skill">${p}</span>`).join('') || 'لم يتم تحديد'}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error('Error loading projects:', error);
-        }
-    }
-
-    async function loadIP() {
-        try {
-            const querySnapshot = await getDocs(collection(db, 'intellectualProperty'));
-            const ipList = [];
-            querySnapshot.forEach(doc => {
-                ipList.push({ id: doc.id, ...doc.data() });
-            });
-            
-            document.getElementById('totalIP').innerText = ipList.length;
-            
-            const grid = document.getElementById('ipGrid');
-            if (ipList.length === 0) {
-                grid.innerHTML = '<div class="loading">لا توجد ملكيات فكرية مسجلة بعد</div>';
-                return;
-            }
-            
-            grid.innerHTML = ipList.map(ip => `
-                <div class="ip-card">
-                    <div class="ip-header">
-                        <i class="fas fa-file-contract"></i>
-                        <div class="ip-title">${ip.name}</div>
-                    </div>
-                    <div class="ip-info">
-                        <p><strong>النوع:</strong> ${ip.type}</p>
-                        <p><strong>الوصف:</strong> ${ip.description || 'لا يوجد وصف'}</p>
-                        <div class="ip-owners">
-                            <strong>المالكون:</strong>
-                            ${ip.owners?.map(owner => `<span class="owner-tag"><i class="fas fa-user"></i> ${owner}</span>`).join('')}
-                        </div>
-                        <p><small><i class="fas fa-calendar"></i> تاريخ التسجيل: ${new Date(ip.date).toLocaleDateString('ar')}</small></p>
-                    </div>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error('Error loading IP:', error);
-        }
-    }
-
-    async function loadPendingMembers() {
-        try {
-            const querySnapshot = await getDocs(query(collection(db, 'users'), where('status', '==', 'pending')));
-            const pending = [];
-            querySnapshot.forEach(doc => {
-                pending.push({ id: doc.id, ...doc.data() });
-            });
-            document.getElementById('pendingMembers').innerText = pending.length;
-            document.getElementById('pendingCount').innerHTML = `(${pending.length})`;
-            return pending;
-        } catch (error) {
-            return [];
-        }
-    }
-
-    // ==================== CHAT FUNCTIONS ====================
-    window.sendMessage = async function() {
-        if (!currentUser || currentUserData?.status !== 'approved') {
-            window.showNotification('يجب أن يكون حسابك معتمداً للمشاركة في الشات', true);
-            return;
-        }
-        
-        const messageInput = document.getElementById('messageInput');
-        const text = messageInput.value.trim();
-        if (!text) return;
-        
-        try {
-            const messagesRef = ref(rtdb, 'chatMessages');
-            await push(messagesRef, {
-                text: text,
-                sender: currentUser.email,
-                senderName: currentUserData?.name || currentUser.email.split('@')[0],
-                timestamp: Date.now()
-            });
-            messageInput.value = '';
-        } catch (error) {
-            window.showNotification('خطأ في إرسال الرسالة', true);
-        }
-    }
-
-    function loadChatMessages() {
-        const messagesRef = ref(rtdb, 'chatMessages');
-        onValue(messagesRef, (snapshot) => {
-            const messages = [];
-            snapshot.forEach(child => {
-                messages.push({ id: child.key, ...child.val() });
-            });
-            
-            messages.sort((a, b) => a.timestamp - b.timestamp);
-            
-            const container = document.getElementById('chatMessages');
-            if (messages.length === 0) {
-                container.innerHTML = '<div class="loading">لا توجد رسائل بعد، كن أول من يرحب!</div>';
-                return;
-            }
-            
-            container.innerHTML = messages.map(msg => `
-                <div class="chat-message ${msg.sender === currentUser?.email ? 'sent' : ''}">
-                    <div class="message-content">
-                        <div class="message-sender">${msg.senderName}</div>
-                        <div class="message-text">${msg.text}</div>
-                        <div class="message-time">${new Date(msg.timestamp).toLocaleTimeString('ar')}</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            container.scrollTop = container.scrollHeight;
+        const snap = await getDocs(query(collection(db, "users"), where("status", "==", "approved")));
+        const grid = document.getElementById('membersGrid');
+        grid.innerHTML = "";
+        snap.forEach(d => {
+            const u = d.data();
+            grid.innerHTML += `<div class="exa-card">
+                <div class="card-banner"></div>
+                <div class="user-img"><i class="fas fa-user-ninja"></i></div>
+                <div class="card-content"><h3>${u.name}</h3>
+                ${(u.skills || []).map(s => `<span class="skill-tag">${s.trim()}</span>`).join('')}</div>
+            </div>`;
         });
     }
 
-    // ==================== IP FUNCTIONS ====================
-    window.showAddIPForm = function() {
-        document.getElementById('addIPModal').style.display = 'flex';
-    }
-    
-    window.closeAddIPModal = function() {
-        document.getElementById('addIPModal').style.display = 'none';
-        document.getElementById('ipName').value = '';
-        document.getElementById('ipType').value = '';
-        document.getElementById('ipOwners').value = '';
-        document.getElementById('ipDescription').value = '';
-    }
-    
-    window.addIP = async function() {
-        if (!currentUser) {
-            window.showNotification('يجب تسجيل الدخول أولاً', true);
-            return;
-        }
-        
-        const name = document.getElementById('ipName').value;
-        const type = document.getElementById('ipType').value;
-        const ownersText = document.getElementById('ipOwners').value;
-        const description = document.getElementById('ipDescription').value;
-        
-        if (!name || !type || !ownersText) {
-            window.showNotification('يرجى ملء جميع الحقول المطلوبة', true);
-            return;
-        }
-        
-        const owners = ownersText.split(',').map(o => o.trim()).filter(o => o);
-        
-        try {
-            await addDoc(collection(db, 'intellectualProperty'), {
-                name: name,
-                type: type,
-                owners: owners,
-                description: description,
-                date: new Date().toISOString(),
-                createdBy: currentUser.email
-            });
-            
-            window.showNotification('تم تسجيل الملكية الفكرية بنجاح!');
-            window.closeAddIPModal();
-            loadIP();
-        } catch (error) {
-            window.showNotification('خطأ: ' + error.message, true);
-        }
+    window.filterMembers = () => {
+        const term = document.getElementById('mSearch').value.toLowerCase();
+        document.querySelectorAll('#membersGrid .exa-card').forEach(c => {
+            c.style.display = c.innerText.toLowerCase().includes(term) ? "flex" : "none";
+        });
+    };
+
+    async function loadProjects() {
+        const snap = await getDocs(collection(db, "projects"));
+        const grid = document.getElementById('projectsGrid');
+        grid.innerHTML = "";
+        snap.forEach(d => {
+            const p = d.data();
+            const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+            const isOwner = p.authorId === auth.currentUser?.uid;
+            grid.innerHTML += `<div class="exa-card">
+                <div class="card-banner" style="background:var(--primary-medium)"></div>
+                <div class="card-content"><h3>${p.name}</h3><p>${p.desc}</p>
+                ${p.link ? `<a href="${p.link}" target="_blank" class="btn btn-gold" style="width:100%; margin-top:10px">🔗 معاينة</a>` : ''}</div>
+                ${(isAdmin || isOwner) ? `<div style="padding:10px; border-top:1px solid #eee; display:flex; gap:5px">
+                    <button class="btn btn-primary btn-sm" data-id="${d.id}" data-name="${p.name}" data-desc="${p.desc}" data-link="${p.link || ''}" onclick="openEditBtn(this)">تعديل</button>
+                    <button class="btn btn-danger btn-sm" data-id="${d.id}" onclick="handleDelete(this.dataset.id)">حذف</button>
+                </div>` : ''}
+            </div>`;
+        });
     }
 
-    // ==================== BADGES ====================
-    function loadBadges() {
-        const badges = [
-            { name: "🏆 المؤسس", icon: "fa-crown", color: "gold", description: "مؤسس EXA Group" },
-            { name: "💎 المبرمج الذهبي", icon: "fa-gem", color: "gold", description: "20+ مشروع" },
-            { name: "⭐ المبرمج الفضي", icon: "fa-star", color: "silver", description: "10+ مشروع" },
-            { name: "🔰 المبرمج البرونزي", icon: "fa-shield", color: "bronze", description: "5+ مشروع" },
-            { name: "🎯 قائد فريق", icon: "fa-users", color: "gold", description: "قيادة 3 مشاريع" },
-            { name: "🚀 مبدع", icon: "fa-rocket", color: "silver", description: "مشروع مبتكر" },
-            { name: "⚖️ حامي الملكية", icon: "fa-gavel", color: "gold", description: "تسجيل 3 ملكيات فكرية" }
-        ];
+    // دالة فتح نموذج التعديل من الزر
+    window.openEditBtn = (btn) => {
+        const docId = btn.dataset.id;
+        const name = btn.dataset.name;
+        const desc = btn.dataset.desc;
+        const link = btn.dataset.link;
         
-        const grid = document.getElementById('badgesGrid');
-        grid.innerHTML = badges.map(badge => `
-            <div class="stat-card">
-                <i class="fas ${badge.icon}" style="font-size: 2rem; color: ${badge.color === 'gold' ? '#ffd700' : badge.color === 'silver' ? '#c0c0c0' : '#cd7f32'}"></i>
-                <div class="stat-number">${badge.name}</div>
-                <div class="stat-label">${badge.description}</div>
-            </div>
-        `).join('');
-    }
+        document.getElementById('pName').value = name;
+        document.getElementById('pDesc').value = desc;
+        document.getElementById('pLink').value = link;
+        document.getElementById('projectModal').dataset.editId = docId;
+        openModal('projectModal');
+    };
 
-    // ==================== ADMIN FUNCTIONS ====================
-    window.openAdminPanel = function() {
-        if (currentUser?.email !== 'elpoppr@exagroup.com') {
-            window.showNotification('غير مصرح! حساب المدير فقط: elpoppr@exagroup.com', true);
-            return;
-        }
-        document.getElementById('adminPanel').classList.add('active');
-        loadPendingRequests();
-    }
-    
-    window.closeAdminPanel = function() {
-        document.getElementById('adminPanel').classList.remove('active');
-    }
-    
-    window.addProject = async function() {
-        if (currentUser?.email !== 'elpoppr@exagroup.com') {
-            window.showNotification('غير مصرح لك!', true);
-            return;
-        }
-        
-        const name = document.getElementById('projectName').value;
-        const description = document.getElementById('projectDesc').value;
-        const participants = document.getElementById('projectParticipants').value.split(',').map(p => p.trim()).filter(p => p);
-        
-        if (!name) {
-            window.showNotification('اسم المشروع مطلوب', true);
-            return;
-        }
-        
-        try {
-            await addDoc(collection(db, 'projects'), {
-                name: name,
-                description: description,
-                participants: participants,
-                date: new Date().toISOString(),
-                createdBy: currentUser.email
-            });
-            
-            window.showNotification('تم إضافة المشروع بنجاح!');
-            document.getElementById('projectName').value = '';
-            document.getElementById('projectDesc').value = '';
-            document.getElementById('projectParticipants').value = '';
-            loadProjects();
-        } catch (error) {
-            window.showNotification('خطأ: ' + error.message, true);
-        }
-    }
-    
-    async function loadPendingRequests() {
-        const container = document.getElementById('pendingRequests');
-        if (!container) return;
-        container.innerHTML = '<div class="loading">جاري التحميل...</div>';
-        
-        try {
-            const querySnapshot = await getDocs(query(collection(db, 'pendingRequests'), orderBy('createdAt', 'desc')));
-            
-            if (querySnapshot.empty) {
-                container.innerHTML = '<p>لا يوجد طلبات معلقة</p>';
-                return;
+    // دالة فتح نموذج التعديل (الطريقة القديمة - للتوافقية)
+    window.openEdit = (docId, name, desc, link) => {
+        document.getElementById('pName').value = name;
+        document.getElementById('pDesc').value = desc;
+        document.getElementById('pLink').value = link || '';
+        document.getElementById('projectModal').dataset.editId = docId;
+        openModal('projectModal');
+    };
+
+    // دالة حذف المشروع
+    window.handleDelete = async (docId) => {
+        if(confirm("أنت متأكد من حذف المشروع؟")) {
+            try {
+                await deleteDoc(doc(db, "projects", docId));
+                toast("تم الحذف بنجاح");
+                loadProjects();
+            } catch (e) {
+                toast("خطأ في الحذف", "error");
             }
-            
-            container.innerHTML = '';
-            querySnapshot.forEach(doc => {
-                const req = doc.data();
-                container.innerHTML += `
-                    <div class="pending-card">
-                        <strong><i class="fas fa-user"></i> ${req.name}</strong><br>
-                        <small><i class="fas fa-envelope"></i> ${req.email}</small><br>
-                        <small><i class="fas fa-code"></i> ${req.skills || 'لم يحدد'}</small><br>
-                        <button class="btn" style="background:green; padding:0.3rem 0.8rem; margin-top:0.5rem;" onclick="window.approveRequest('${req.uid}')">✓ قبول</button>
-                        <button class="btn" style="background:red; padding:0.3rem 0.8rem; margin-top:0.5rem;" onclick="window.rejectRequest('${req.uid}')">✗ رفض</button>
+        }
+    };
+
+    // دالة إضافة أو تعديل المشروع
+    window.handleAddProject = async () => {
+        const name = document.getElementById('pName').value;
+        const desc = document.getElementById('pDesc').value;
+        const link = document.getElementById('pLink').value;
+        const projectModal = document.getElementById('projectModal');
+        const editId = projectModal.dataset.editId || null;
+
+        if(!name || !desc) return toast("يرجى ملء جميع الحقول المطلوبة", "error");
+
+        try {
+            if(editId && editId !== 'undefined') {
+                // تعديل مشروع موجود
+                console.log("تعديل المشروع:", editId);
+                await updateDoc(doc(db, "projects", editId), { name, desc, link });
+                toast("تم التعديل بنجاح");
+                delete projectModal.dataset.editId;
+            } else {
+                // إضافة مشروع جديد
+                console.log("إضافة مشروع جديد");
+                await addDoc(collection(db, "projects"), { 
+                    name, desc, link, 
+                    authorId: auth.currentUser.uid,
+                    createdAt: new Date()
+                });
+                toast("تم النشر بنجاح");
+            }
+            closeModal('projectModal');
+            // تنظيف الحقول والـ dataset
+            document.getElementById('pName').value = '';
+            document.getElementById('pDesc').value = '';
+            document.getElementById('pLink').value = '';
+            delete projectModal.dataset.editId;
+            loadProjects();
+        } catch (e) {
+            console.error("خطأ:", e);
+            toast("خطأ في العملية: " + e.message, "error");
+        }
+    };
+
+    // --- كود الدردشة ---
+
+    window.handleSendMessage = async () => {
+        if (!auth.currentUser) return;
+        const text = document.getElementById('msgInput').value;
+        if(!text) return;
+
+        await push(ref(rtdb,'messages'),{
+            text,
+            sender: userProfile ? userProfile.name : "وحش مجهول",
+            uid: auth.currentUser.uid,
+            time: Date.now()
+        });
+
+        await set(ref(rtdb,'typing/'+auth.currentUser.uid),false);
+        document.getElementById('msgInput').value="";
+    };
+
+    const input = document.getElementById('msgInput');
+    input.addEventListener('input', async ()=>{
+        if (!auth.currentUser) return;
+        await set(ref(rtdb,'typing/'+auth.currentUser.uid),true);
+        setTimeout(()=>{
+            set(ref(rtdb,'typing/'+auth.currentUser.uid),false);
+        },1500);
+    });
+
+    function loadChat() {
+        // مراقبة الكتابة
+        onValue(ref(rtdb,'typing'), snap => {
+            let typingText="";
+            snap.forEach(child => {
+                if(auth.currentUser && child.key !== auth.currentUser.uid && child.val()){
+                    typingText="✍️ حد بيكتب الآن...";
+                }
+            });
+            document.getElementById('typing').innerText = typingText;
+        });
+
+        // جلب الرسائل
+        onValue(ref(rtdb,'messages'), snap => {
+            const box = document.getElementById('chatBox');
+            box.innerHTML = "";
+            let count = 0;
+            snap.forEach(c => {
+                const m = c.val();
+                count++;
+                const isMe = auth.currentUser && m.uid === auth.currentUser.uid;
+                const time = new Date(m.time).toLocaleTimeString('ar-EG',{ hour:'2-digit', minute:'2-digit' });
+
+                box.innerHTML += `
+                    <div class="msg-bubble ${isMe?'sent':'received'}">
+                        <small>${m.sender || 'وحش'}</small>
+                        <div>${m.text}</div>
+                        <div class="msg-time">${time}</div>
                     </div>
                 `;
             });
-        } catch (error) {
-            container.innerHTML = '<p>خطأ في تحميل الطلبات</p>';
-        }
-    }
-    
-    window.approveRequest = async function(uid) {
-        try {
-            // Update user status to approved
-            await updateDoc(doc(db, 'users', uid), {
-                status: 'approved'
-            });
-            
-            // Delete from pending requests
-            const pendingQuery = await getDocs(query(collection(db, 'pendingRequests'), where('uid', '==', uid)));
-            pendingQuery.forEach(async (doc) => {
-                await deleteDoc(doc.ref);
-            });
-            
-            window.showNotification('تم قبول الطلب بنجاح!');
-            loadPendingRequests();
-            loadMembers();
-            loadPendingMembers();
-        } catch (error) {
-            window.showNotification('خطأ: ' + error.message, true);
-        }
-    }
-    
-    window.rejectRequest = async function(uid) {
-        try {
-            // Delete user from users collection
-            await deleteDoc(doc(db, 'users', uid));
-            
-            // Delete from pending requests
-            const pendingQuery = await getDocs(query(collection(db, 'pendingRequests'), where('uid', '==', uid)));
-            pendingQuery.forEach(async (doc) => {
-                await deleteDoc(doc.ref);
-            });
-            
-            window.showNotification('تم رفض الطلب');
-            loadPendingRequests();
-            loadPendingMembers();
-        } catch (error) {
-            window.showNotification('خطأ: ' + error.message, true);
-        }
+            document.querySelectorAll('.stat-item b')[2].innerText = count;
+            box.scrollTop = box.scrollHeight;
+        });
     }
 
-    // ==================== PAGE NAVIGATION ====================
-    window.showPage = function(pageName) {
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        const targetPage = document.getElementById(`${pageName}-page`);
-        if (targetPage) targetPage.classList.add('active');
-        
-        document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-        if (event && event.target) event.target.classList.add('active');
-        
-        if (pageName === 'chat') {
-            loadChatMessages();
-        }
+    async function loadPendingUsers() {
+        if(auth.currentUser?.email !== ADMIN_EMAIL) return;
+        const snap = await getDocs(query(collection(db, "users"), where("status", "==", "pending")));
+        const list = document.getElementById('pendingUsersList');
+        list.innerHTML = snap.empty ? "لا يوجد طلبات" : "";
+        snap.forEach(d => {
+            const u = d.data();
+            list.innerHTML += `<div class="request-card">
+                <div><b>${u.name}</b><br><small>${u.email}</small></div>
+                <button class="btn btn-gold" onclick="approveUser('${d.id}')">قبول</button>
+            </div>`;
+        });
     }
 
-    // ==================== INITIALIZATION ====================
-    onAuthStateChanged(auth, async (user) => {
-        console.log('Auth state changed:', user?.email);
-        currentUser = user;
-        
-        if (user) {
-            // Get user data from Firestore
-            currentUserData = await getUserData(user.uid, user.email);
-            
-            if (!currentUserData && user.email === 'elpoppr@exagroup.com') {
-                // Create admin data if not exists
-                currentUserData = {
-                    name: 'محمد ايهاب',
-                    email: user.email,
-                    skills: ['PHP', 'JavaScript', 'Python', 'Flutter', 'Leadership'],
-                    status: 'approved',
-                    role: 'admin',
-                    isFounder: true,
-                    createdAt: new Date().toISOString(),
-                    programsCount: 25,
-                    badges: [{ name: 'المؤسس', icon: 'fa-crown', color: 'gold' }]
-                };
-                await setDoc(doc(db, 'users', user.uid), currentUserData);
-            } else if (!currentUserData) {
-                // Create user data if not exists
-                currentUserData = {
-                    name: user.email.split('@')[0],
-                    email: user.email,
-                    skills: [],
-                    status: 'pending',
-                    role: 'member',
-                    createdAt: new Date().toISOString(),
-                    programsCount: 0,
-                    badges: []
-                };
-                await setDoc(doc(db, 'users', user.uid), currentUserData);
-            }
-        } else {
-            currentUserData = null;
-        }
-        
-        updateUI();
-        loadMembers();
-        loadProjects();
-        loadIP();
-        loadPendingMembers();
-        
-        if (document.getElementById('chat-page')?.classList.contains('active')) {
-            loadChatMessages();
-        }
-    });
-    
-    // Initial loads
-    loadMembers();
-    loadProjects();
-    loadIP();
-    loadBadges();
-    loadPendingMembers();
+    window.approveUser = async (docId) => {
+        try {
+            await updateDoc(doc(db, "users", docId), { status: 'approved' });
+            toast("تم القبول"); loadPendingUsers(); updateStats();
+        } catch (e) { toast("خطأ في القبول", "error"); }
+    };
 </script>
 </body>
 </html>
